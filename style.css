@@ -32,6 +32,17 @@ a{color:inherit;text-decoration:none;}
 button{font-family:inherit;cursor:pointer;}
 .container{width:min(1120px,92%);margin:0 auto;}
 
+/* ---------- heart burst ---------- */
+.heart-piece{
+  position:fixed;pointer-events:none;z-index:5000;font-size:1.1rem;
+  animation:heartFloat 1.3s ease-out forwards;
+}
+@keyframes heartFloat{
+  0%{transform:translateY(0) scale(.6);opacity:0;}
+  15%{opacity:1;transform:translateY(-10px) scale(1);}
+  100%{transform:translateY(-90px) scale(.9);opacity:0;}
+}
+
 /* ---------- scroll progress ---------- */
 .scroll-progress{
   position:fixed;top:0;left:0;height:2px;width:0%;z-index:600;
@@ -156,6 +167,23 @@ section{padding:110px 0;}
 .fact:hover{background:rgba(255,255,255,0.03);}
 .fact span:first-child{color:var(--text-dim);font-size:.85rem;}
 .fact span:last-child{font-weight:600;text-align:right;}
+
+.fun-facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+.fun-fact{
+  display:inline-flex;align-items:center;
+  background:rgba(217,119,87,.08);border:1px solid rgba(217,119,87,.18);
+  color:var(--text-sub);padding:8px 14px;border-radius:30px;font-size:.85rem;
+  transition:transform .2s var(--ease),border-color .2s;
+}
+.fun-fact:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--text);}
+
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  margin-top:56px;padding-top:40px;border-top:1px solid var(--border);
+}
+.stat-item{text-align:center;}
+.stat-num{display:block;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.2vw,2.4rem);color:var(--accent);}
+.stat-label{display:block;color:var(--text-dim);font-size:.85rem;margin-top:6px;}
 
 /* skills */
 .skills-intro{margin-bottom:22px;}
@@ -336,4 +364,5 @@ footer{border-top:1px solid var(--border);padding:44px 0;}
 @media (max-width:620px){
   .services-grid{grid-template-columns:1fr;}
   .hero{padding-top:120px;}
+  .stats-row{grid-template-columns:1fr;gap:24px;}
 }
