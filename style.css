@@ -37,6 +37,28 @@ a{color:inherit;text-decoration:none;}
 button{font-family:inherit;cursor:pointer;}
 .container{width:min(1180px,92%);margin:0 auto;}
 
+/* ---------- boot loader ---------- */
+.boot-loader{
+  position:fixed;inset:0;z-index:9998;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;padding:0 24px;
+  transition:opacity .5s var(--ease),visibility .5s;
+}
+.boot-loader.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.boot-terminal{font-size:clamp(.85rem,2.4vw,1.1rem);color:var(--cyan-soft);text-align:center;}
+.boot-prompt{color:var(--text-dim);}
+.boot-cursor{animation:blinkCursor .8s steps(1) infinite;}
+@keyframes blinkCursor{0%,50%{opacity:1;}51%,100%{opacity:0;}}
+
+/* ---------- confetti ---------- */
+.confetti-piece{
+  position:fixed;width:7px;height:7px;border-radius:2px;pointer-events:none;z-index:5000;
+  animation:confettiFly .9s ease-out forwards;
+}
+@keyframes confettiFly{
+  0%{transform:translate(0,0) rotate(0deg);opacity:1;}
+  100%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0;}
+}
+
 /* ---------- scroll progress ---------- */
 .scroll-progress{
   position:fixed;top:0;left:0;height:3px;width:0%;z-index:600;
@@ -261,9 +283,9 @@ section{padding:110px 0;}
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 .service-card{
   border:1px solid var(--border);background:var(--card);border-radius:var(--radius);
-  padding:30px;transition:transform .3s var(--ease),border-color .3s;cursor:pointer;
+  padding:30px;transition:transform .15s ease-out,border-color .3s;cursor:pointer;will-change:transform;
 }
-.service-card:hover{transform:translateY(-6px);border-color:rgba(6,182,212,.35);}
+.service-card:hover{border-color:rgba(6,182,212,.35);}
 .service-icon{
   width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;
   background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);color:var(--cyan-soft);
@@ -283,6 +305,7 @@ section{padding:110px 0;}
   border:1px solid rgba(6,182,212,.22);border-radius:var(--radius);
   background:linear-gradient(160deg,rgba(18,24,43,.85),rgba(9,12,24,.9));
   overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.4);
+  transition:transform .15s ease-out;will-change:transform;
 }
 .browser-mock{margin:26px 26px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border-strong);background:#05070f;}
 .browser-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0e1526;border-bottom:1px solid var(--border);}

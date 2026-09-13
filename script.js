@@ -1,6 +1,54 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fineHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
+/* ---------- boot loader ---------- */
+(function(){
+  const loader = document.getElementById('bootLoader');
+  const lineEl = document.getElementById('bootLine');
+  if(!loader || !lineEl) return;
+  if(reduceMotion || sessionStorage.getItem('bootDone')){
+    loader.classList.add('hide');
+    return;
+  }
+  const text = "booting syeda-naveera.dev ...";
+  let i = 0;
+  const safety = setTimeout(()=>{ loader.classList.add('hide'); }, 3000);
+  function type(){
+    lineEl.textContent = text.slice(0, i);
+    i++;
+    if(i <= text.length){
+      setTimeout(type, 34);
+    } else {
+      clearTimeout(safety);
+      setTimeout(()=>{
+        loader.classList.add('hide');
+        sessionStorage.setItem('bootDone', '1');
+      }, 450);
+    }
+  }
+  type();
+})();
+
+/* ---------- confetti burst ---------- */
+function confettiBurst(x, y){
+  if(reduceMotion) return;
+  const colors = ['#22d3ee','#2563eb','#8b5cf6','#34d399','#f59e0b'];
+  for(let i=0; i<22; i++){
+    const p = document.createElement('span');
+    p.className = 'confetti-piece';
+    p.style.left = x+'px';
+    p.style.top = y+'px';
+    p.style.background = colors[i % colors.length];
+    const angle = Math.random()*Math.PI*2;
+    const dist = 55 + Math.random()*85;
+    p.style.setProperty('--dx', Math.cos(angle)*dist+'px');
+    p.style.setProperty('--dy', Math.sin(angle)*dist+'px');
+    p.style.setProperty('--rot', (Math.random()*720-360)+'deg');
+    document.body.appendChild(p);
+    setTimeout(()=> p.remove(), 900);
+  }
+}
+
 /* ---------- custom cursor ---------- */
 if(fineHover && !reduceMotion){
   const dot = document.querySelector('.cursor-dot');
@@ -26,6 +74,17 @@ if(fineHover && !reduceMotion){
       const relX = e.clientX - (r.left + r.width/2);
       const relY = e.clientY - (r.top + r.height/2);
       el.style.transform = `translate(${relX*0.18}px, ${relY*0.18}px)`;
+    });
+    el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
+  });
+
+  /* 3D tilt on project + service cards */
+  document.querySelectorAll('.project-card, .service-card').forEach(el=>{
+    el.addEventListener('mousemove', e=>{
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left)/r.width - 0.5;
+      const py = (e.clientY - r.top)/r.height - 0.5;
+      el.style.transform = `perspective(900px) rotateX(${(-py*6).toFixed(2)}deg) rotateY(${(px*6).toFixed(2)}deg) translateY(-4px)`;
     });
     el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
   });
@@ -88,10 +147,11 @@ brandLogo.addEventListener('click', function(e){
 });
 
 /* ---------- avatar click: greeting ---------- */
-document.getElementById('avatarFrame').addEventListener('click', function(){
+document.getElementById('avatarFrame').addEventListener('click', function(e){
   this.style.transform = 'scale(0.97)';
   setTimeout(()=> this.style.transform = '', 180);
   showToast("Hey, I'm Syeda Naveera 👋");
+  confettiBurst(e.clientX, e.clientY);
 });
 
 /* ---------- floating chips: fact toast ---------- */
@@ -154,21 +214,44 @@ document.getElementById('contactForm').addEventListener('submit', function(e){
   const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
   window.location.href = `mailto:syeda.naveera.19@gmail.com?subject=${encodeURIComponent('Portfolio inquiry from '+name)}&body=${body}`;
   showToast('Opening your email app…');
+  const btn = this.querySelector('button[type="submit"]');
+  const r = btn.getBoundingClientRect();
+  confettiBurst(r.left + r.width/2, r.top + r.height/2);
 });
 
-/* ---------- rotating tagline ---------- */
+/* ---------- rotating tagline (typewriter) ---------- */
 const taglines = [
   "Frontend developer focused on clean code, considered motion, and interfaces that feel good to use.",
   "I turn plain ideas into interfaces people actually enjoy using.",
-  "Building with HTML5, CSS3, JavaScript, and Bootstrap 5 — responsive from the first line."
+  "Building with HTML5, CSS3, JavaScript, PHP, and Bootstrap 5 — responsive from the first line."
 ];
 let tIdx=0;
-if(!reduceMotion){
-  setInterval(()=>{
-    tIdx = (tIdx+1)%taglines.length;
-    const el = document.getElementById('rotatingSub');
-    el.style.opacity=0;
-    setTimeout(()=>{ el.textContent = taglines[tIdx]; el.style.opacity=1; }, 350);
-  }, 4200);
-  document.getElementById('rotatingSub').style.transition='opacity .35s ease';
+const rotatingSubEl = document.getElementById('rotatingSub');
+if(!reduceMotion && rotatingSubEl){
+  function typeTagline(text, cb){
+    let i = 0;
+    const iv = setInterval(()=>{
+      rotatingSubEl.textContent = text.slice(0, i);
+      i++;
+      if(i > text.length){
+        clearInterval(iv);
+        if(cb) setTimeout(cb, 2600);
+      }
+    }, 20);
+  }
+  function eraseTagline(cb){
+    let text = rotatingSubEl.textContent;
+    const iv = setInterval(()=>{
+      text = text.slice(0, -1);
+      rotatingSubEl.textContent = text;
+      if(text.length === 0){ clearInterval(iv); if(cb) cb(); }
+    }, 10);
+  }
+  function cycle(){
+    eraseTagline(()=>{
+      tIdx = (tIdx+1)%taglines.length;
+      typeTagline(taglines[tIdx], cycle);
+    });
+  }
+  setTimeout(cycle, 4200);
 }
