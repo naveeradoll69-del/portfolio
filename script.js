@@ -6,27 +6,33 @@ const fineHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
   const loader = document.getElementById('bootLoader');
   const lineEl = document.getElementById('bootLine');
   if(!loader || !lineEl) return;
-  if(reduceMotion || sessionStorage.getItem('bootDone')){
-    loader.classList.add('hide');
-    return;
-  }
-  const text = "booting syeda-naveera.dev ...";
-  let i = 0;
-  const safety = setTimeout(()=>{ loader.classList.add('hide'); }, 3000);
-  function type(){
-    lineEl.textContent = text.slice(0, i);
-    i++;
-    if(i <= text.length){
-      setTimeout(type, 34);
-    } else {
-      clearTimeout(safety);
-      setTimeout(()=>{
-        loader.classList.add('hide');
-        sessionStorage.setItem('bootDone', '1');
-      }, 450);
+  try{
+    let alreadyBooted = false;
+    try{ alreadyBooted = !!sessionStorage.getItem('bootDone'); }catch(e){}
+    if(reduceMotion || alreadyBooted){
+      loader.classList.add('hide');
+      return;
     }
+    const text = "booting syeda-naveera.dev ...";
+    let i = 0;
+    const safety = setTimeout(()=>{ loader.classList.add('hide'); }, 3000);
+    function type(){
+      lineEl.textContent = text.slice(0, i);
+      i++;
+      if(i <= text.length){
+        setTimeout(type, 34);
+      } else {
+        clearTimeout(safety);
+        setTimeout(()=>{
+          loader.classList.add('hide');
+          try{ sessionStorage.setItem('bootDone', '1'); }catch(e){}
+        }, 450);
+      }
+    }
+    type();
+  }catch(e){
+    loader.classList.add('hide');
   }
-  type();
 })();
 
 /* ---------- confetti burst ---------- */
@@ -51,6 +57,7 @@ function confettiBurst(x, y){
 
 /* ---------- custom cursor ---------- */
 if(fineHover && !reduceMotion){
+  document.documentElement.classList.add('custom-cursor-on');
   const dot = document.querySelector('.cursor-dot');
   const ring = document.querySelector('.cursor-ring');
   const label = ring.querySelector('.cursor-label');
@@ -88,9 +95,6 @@ if(fineHover && !reduceMotion){
     });
     el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
   });
-} else {
-  document.querySelector('.cursor-dot').style.display='none';
-  document.querySelector('.cursor-ring').style.display='none';
 }
 
 /* ---------- scroll reveal ---------- */
