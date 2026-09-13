@@ -6,7 +6,7 @@
 <title>Syeda Naveera — Frontend Developer</title>
 <meta name="description" content="Syeda Naveera — Frontend Developer building responsive, interactive web experiences." />
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070913'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%2322d3ee' text-anchor='middle'%3ESN%3C/text%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231c1916'/%3E%3Ctext x='32' y='42' font-family='sans-serif' font-size='24' font-weight='700' fill='%23d97757' text-anchor='middle'%3ESN%3C/text%3E%3C/svg%3E" />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Syeda Naveera — Frontend Developer" />
@@ -15,50 +15,30 @@
 <meta name="twitter:card" content="summary" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="boot-loader" id="bootLoader">
-  <div class="boot-terminal mono">
-    <span class="boot-prompt">&gt;</span> <span class="boot-line" id="bootLine"></span><span class="boot-cursor">▍</span>
-  </div>
-</div>
-
 <div class="scroll-progress" id="scrollProgress"></div>
-
-<div class="cursor-dot"></div>
-<div class="cursor-ring"><span class="cursor-label"></span></div>
-
-<div class="bg-fx">
-  <div class="bg-grid"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="noise-overlay"></div>
-</div>
-<canvas id="dotGrid" class="dot-grid-canvas"></canvas>
 
 <!-- NAV -->
 <nav class="nav">
   <div class="container nav-inner">
-    <a href="#home" class="brand clickable" id="brandLogo" data-cursor="Who?">
-      <span class="brand-short"><span class="tag">&lt;</span><span class="name">SN</span><span class="tag">/&gt;</span></span>
-      <span class="brand-full">Syeda Naveera</span>
-    </a>
+    <a href="#home" class="brand">Syeda Naveera</a>
     <div class="nav-links" id="navLinks">
-      <a href="#home" class="clickable">Home</a>
-      <a href="#about" class="clickable">About</a>
-      <a href="#skills" class="clickable">Skills</a>
-      <a href="#education" class="clickable">Education</a>
-      <a href="#work" class="clickable">Work</a>
-      <a href="#contact" class="clickable">Contact</a>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
     </div>
     <div class="nav-right">
-      <a href="#contact" class="nav-cta clickable">Let's talk<i class="fa-solid fa-arrow-right-long"></i></a>
-      <button class="nav-toggle clickable" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      <a href="#contact" class="nav-cta">Let's talk</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
 </nav>
@@ -69,40 +49,20 @@
     <div>
       <div class="badge"><span class="dot"></span> Available for remote &amp; freelance work</div>
 
-      <div class="code-window">
-        <div class="code-titlebar">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <span class="filename">profile.js</span>
-        </div>
-        <div class="code-body">
-<span class="k">const</span> <span class="fn">developer</span> = {<br>
-&nbsp;&nbsp;name: <span class="s">'Syeda Naveera'</span>,<br>
-&nbsp;&nbsp;role: <span class="s">'Frontend Developer'</span>,<br>
-&nbsp;&nbsp;stack: [<span class="s">'HTML5'</span>, <span class="s">'CSS3'</span>, <span class="s">'JS'</span>, <span class="s">'PHP'</span>, <span class="s">'Bootstrap'</span>],<br>
-&nbsp;&nbsp;status: <span class="s">'available'</span> <span class="c">// worldwide, remote</span><br>
-};
-        </div>
-      </div>
-
-      <h1 class="hero-title">Crafting <span class="grad">responsive, interactive</span> web experiences with a sharp eye for detail.</h1>
-      <p class="hero-sub" id="rotatingSub">Frontend developer focused on clean code, considered motion, and interfaces that feel good to use.</p>
+      <h1 class="hero-title">Crafting <span class="accent">responsive, interactive</span> web experiences with a sharp eye for detail.</h1>
+      <p class="hero-sub">Frontend developer focused on clean code, considered motion, and interfaces that feel good to use.</p>
 
       <div class="hero-actions">
-        <a href="#work" class="btn btn-grad clickable">View my work <i class="fa-solid fa-arrow-down"></i></a>
-        <a href="https://wa.me/923150025269" target="_blank" class="btn btn-whatsapp clickable"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+        <a href="#work" class="btn btn-primary">View my work</a>
+        <a href="https://wa.me/923150025269" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
       </div>
     </div>
 
     <div class="avatar-wrap">
-      <div class="avatar-glow"></div>
-      <div class="avatar-badge"><span class="dot"></span> Open to work</div>
-      <div class="avatar-frame clickable" id="avatarFrame" data-cursor="Hi!">
+      <div class="avatar-frame" id="avatarFrame">
         <img src="avatar.jpg" alt="Syeda Naveera" />
       </div>
-      <div class="float-chip chip-1 clickable" data-cursor="Tap" data-fact="HTML5 — semantic, accessible structure for every page"><i class="fa-brands fa-html5"></i> HTML5</div>
-      <div class="float-chip chip-2 clickable" data-cursor="Tap" data-fact="CSS3 — layout, animation, and the glass effects on this page"><i class="fa-brands fa-css3-alt"></i> CSS3</div>
-      <div class="float-chip chip-3 clickable" data-cursor="Tap" data-fact="JavaScript — powers every interaction you just clicked"><i class="fa-brands fa-js"></i> JavaScript</div>
-      <div class="float-chip chip-4 clickable" data-cursor="Tap" data-fact="Bootstrap — fast, solid grid systems under the hood"><i class="fa-brands fa-bootstrap"></i> Bootstrap</div>
+      <div class="avatar-badge"><span class="dot"></span> Open to work</div>
     </div>
   </div>
 </section>
@@ -111,7 +71,7 @@
 <section id="about">
   <div class="container">
     <div class="head reveal">
-      <span class="kicker">01 <i>/</i> About</span>
+      <span class="kicker">01 / About</span>
       <h2>A little about me</h2>
       <p>What I care about when I build things.</p>
     </div>
@@ -122,10 +82,10 @@
         <p>Currently pursuing F.Sc (Pre-Medical) alongside an AI &amp; Web Development program at Aptech, and building/refining <strong>CellInfo</strong>, a mobile-comparison web app — see it below. I'm looking for an internship or entry-level opportunity to grow these skills on real projects.</p>
       </div>
       <div class="fact-list reveal">
-        <div class="fact"><span>focus</span><span>Frontend Engineering</span></div>
-        <div class="fact"><span>availability</span><span>Internship &amp; Freelance</span></div>
-        <div class="fact"><span>currently building</span><span>CellInfo</span></div>
-        <div class="fact"><span>based</span><span>Karachi, Pakistan</span></div>
+        <div class="fact"><span>Focus</span><span>Frontend Engineering</span></div>
+        <div class="fact"><span>Availability</span><span>Internship &amp; Freelance</span></div>
+        <div class="fact"><span>Currently building</span><span>CellInfo</span></div>
+        <div class="fact"><span>Based</span><span>Karachi, Pakistan</span></div>
       </div>
     </div>
   </div>
@@ -135,7 +95,7 @@
 <section id="education">
   <div class="container">
     <div class="head reveal">
-      <span class="kicker violet">02 <i>/</i> Education</span>
+      <span class="kicker">02 / Education</span>
       <h2>Education &amp; training</h2>
       <p>What I've studied and what I'm learning right now.</p>
     </div>
@@ -156,37 +116,22 @@
 <section id="skills">
   <div class="container">
     <div class="head reveal">
-      <span class="kicker">03 <i>/</i> Skills</span>
+      <span class="kicker">03 / Skills</span>
       <h2>Tools I reach for</h2>
       <p>The stack behind most of what I ship.</p>
     </div>
-    <div class="skills-wrap">
-      <div class="code-window reveal" style="max-width:100%;">
-        <div class="code-titlebar">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <span class="filename">skills.json</span>
-        </div>
-        <div class="code-body">
-{<br>
-&nbsp;&nbsp;<span class="p">"languages"</span>: [<span class="s">"HTML5"</span>, <span class="s">"CSS3"</span>, <span class="s">"JavaScript ES6+"</span>, <span class="s">"PHP"</span>],<br>
-&nbsp;&nbsp;<span class="p">"framework"</span>: [<span class="s">"Bootstrap 5"</span>],<br>
-&nbsp;&nbsp;<span class="p">"practices"</span>: [<span class="s">"Responsive Design"</span>, <span class="s">"Git &amp; GitHub"</span>, <span class="s">"UI Animation"</span>]<br>
-}
-        </div>
-      </div>
-      <div class="reveal">
-        <p style="color:var(--text-sub);">Hover a tag for how I use it day to day.</p>
-        <div class="chip-row">
-          <div class="skill-chip clickable"><i class="fa-brands fa-html5"></i> HTML5<span class="skill-tip">Semantic, accessible structure</span></div>
-          <div class="skill-chip clickable"><i class="fa-brands fa-css3-alt"></i> CSS3<span class="skill-tip">Layout, animation, glass effects</span></div>
-          <div class="skill-chip clickable"><i class="fa-brands fa-js"></i> JavaScript (ES6+)<span class="skill-tip">Interactivity &amp; DOM logic</span></div>
-          <div class="skill-chip clickable"><i class="fa-brands fa-php"></i> PHP<span class="skill-tip">Forms, basic dynamic &amp; database-connected pages</span></div>
-          <div class="skill-chip clickable"><i class="fa-brands fa-bootstrap"></i> Bootstrap 5<span class="skill-tip">Fast, solid grid systems</span></div>
-          <div class="skill-chip clickable"><i class="fa-solid fa-mobile-screen-button"></i> Responsive Design<span class="skill-tip">One codebase, every screen</span></div>
-          <div class="skill-chip clickable"><i class="fa-brands fa-git-alt"></i> Git &amp; GitHub<span class="skill-tip">Version control, clean commits</span></div>
-          <div class="skill-chip clickable"><i class="fa-solid fa-wand-magic-sparkles"></i> UI/UX Animation<span class="skill-tip">Motion that explains itself</span></div>
-        </div>
-      </div>
+    <div class="skills-intro reveal">
+      <p>Hover a tag for how I use it day to day.</p>
+    </div>
+    <div class="chip-row reveal">
+      <div class="skill-chip"><i class="fa-brands fa-html5"></i> HTML5<span class="skill-tip">Semantic, accessible structure</span></div>
+      <div class="skill-chip"><i class="fa-brands fa-css3-alt"></i> CSS3<span class="skill-tip">Layout, animation, glass effects</span></div>
+      <div class="skill-chip"><i class="fa-brands fa-js"></i> JavaScript (ES6+)<span class="skill-tip">Interactivity &amp; DOM logic</span></div>
+      <div class="skill-chip"><i class="fa-brands fa-php"></i> PHP<span class="skill-tip">Forms, basic dynamic &amp; database-connected pages</span></div>
+      <div class="skill-chip"><i class="fa-brands fa-bootstrap"></i> Bootstrap 5<span class="skill-tip">Fast, solid grid systems</span></div>
+      <div class="skill-chip"><i class="fa-solid fa-mobile-screen-button"></i> Responsive Design<span class="skill-tip">One codebase, every screen</span></div>
+      <div class="skill-chip"><i class="fa-brands fa-git-alt"></i> Git &amp; GitHub<span class="skill-tip">Version control, clean commits</span></div>
+      <div class="skill-chip"><i class="fa-solid fa-wand-magic-sparkles"></i> UI/UX Animation<span class="skill-tip">Motion that explains itself</span></div>
     </div>
   </div>
 </section>
@@ -195,30 +140,30 @@
 <section id="services">
   <div class="container">
     <div class="head reveal">
-      <span class="kicker">04 <i>/</i> Services</span>
+      <span class="kicker">04 / Services</span>
       <h2>What I can build for you</h2>
       <p>Tap a card for a bit more detail.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal clickable" tabindex="0">
+      <div class="service-card reveal" tabindex="0">
         <div class="service-icon"><i class="fa-solid fa-code"></i></div>
         <h3>Custom Web Development</h3>
         <p>Clean, modular HTML5/CSS3/JS code engineered for speed and reliability.</p>
         <div class="service-more">Built without unnecessary dependencies, structured so the next developer (or future me) can read it easily.</div>
         <div class="service-hint">tap to expand</div>
       </div>
-      <div class="service-card reveal clickable" tabindex="0">
+      <div class="service-card reveal" tabindex="0">
         <div class="service-icon"><i class="fa-solid fa-mobile-screen"></i></div>
         <h3>Responsive Mobile UI</h3>
         <p>Pixel-perfect layouts optimized seamlessly across phones, tablets, and desktop.</p>
         <div class="service-more">Every layout is tested at real breakpoints, not just resized in a browser window.</div>
         <div class="service-hint">tap to expand</div>
       </div>
-      <div class="service-card reveal clickable" tabindex="0">
+      <div class="service-card reveal" tabindex="0">
         <div class="service-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
         <h3>Interactive Web Apps</h3>
-        <p>Dynamic JS UI features, smooth scroll animation, glassmorphism, live previews.</p>
-        <div class="service-more">From custom cursors to live in-page previews — the kind of detail that makes a site feel considered.</div>
+        <p>Dynamic JS UI features, smooth scroll animation, and live previews.</p>
+        <div class="service-more">The kind of detail that makes a site feel considered — clear feedback, smooth transitions, nothing jarring.</div>
         <div class="service-hint">tap to expand</div>
       </div>
     </div>
@@ -229,7 +174,7 @@
 <section id="work">
   <div class="container">
     <div class="head reveal">
-      <span class="kicker">05 <i>/</i> Work</span>
+      <span class="kicker">05 / Work</span>
       <h2>Featured project</h2>
       <p>A live look at what I've been building.</p>
     </div>
@@ -239,7 +184,7 @@
           <div class="dots"><span></span><span></span><span></span></div>
           <div class="browser-url"><i class="fa-solid fa-lock" style="font-size:.65rem;margin-right:6px;"></i>cellinfo — mobile spec portal</div>
         </div>
-        <div class="browser-view clickable" id="openPreview" data-cursor="Preview">
+        <div class="browser-view" id="openPreview">
           <iframe src="cellinfo-preview.html" tabindex="-1"></iframe>
           <div class="preview-cta"><span><i class="fa-solid fa-expand"></i> Open live preview</span></div>
         </div>
@@ -251,8 +196,8 @@
         <h3>CellInfo — Mobile World &amp; Spec Portal</h3>
         <p>An interactive mobile discovery and smartphone comparison web app. Real-time spec comparisons, dynamic phone card search, brand filtering, a dark theme interface, and interactive detail modals.</p>
         <div class="project-actions">
-          <button class="btn btn-grad clickable" id="openPreviewBtn"><i class="fa-solid fa-expand"></i> Live Preview</button>
-          <a href="https://github.com/naveeradoll69-del/cellinfo" target="_blank" class="btn btn-ghost clickable"><i class="fa-brands fa-github"></i> View Code</a>
+          <button class="btn btn-primary" id="openPreviewBtn"><i class="fa-solid fa-expand"></i> Live Preview</button>
+          <a href="https://github.com/naveeradoll69-del/cellinfo" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-github"></i> View Code</a>
         </div>
       </div>
     </div>
@@ -263,32 +208,32 @@
 <section id="contact">
   <div class="container">
     <div class="head reveal">
-      <span class="kicker">06 <i>/</i> Contact</span>
+      <span class="kicker">06 / Contact</span>
       <h2>Let's build something</h2>
       <p>Reach out directly, or send a message below.</p>
     </div>
     <div class="contact-grid">
       <div class="reveal">
-        <div class="contact-card clickable" data-copy="syeda.naveera.19@gmail.com" data-cursor="Copy">
+        <div class="contact-card" data-copy="syeda.naveera.19@gmail.com">
           <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
           <div>
-            <div class="contact-label">email</div>
+            <div class="contact-label">Email</div>
             <div class="contact-value">syeda.naveera.19@gmail.com</div>
           </div>
           <div class="copy-hint">click to copy</div>
         </div>
-        <a class="contact-card clickable" href="https://wa.me/923150025269" target="_blank" data-cursor="Open">
+        <a class="contact-card" href="https://wa.me/923150025269" target="_blank">
           <div class="contact-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
           <div>
-            <div class="contact-label">whatsapp</div>
+            <div class="contact-label">WhatsApp</div>
             <div class="contact-value">+92 315 0025269</div>
           </div>
           <div class="copy-hint">chat now</div>
         </a>
-        <div class="contact-card clickable" data-copy="https://github.com/naveeradoll69-del" data-cursor="Copy">
+        <div class="contact-card" data-copy="https://github.com/naveeradoll69-del">
           <div class="contact-icon"><i class="fa-brands fa-github"></i></div>
           <div>
-            <div class="contact-label">github</div>
+            <div class="contact-label">GitHub</div>
             <div class="contact-value">naveeradoll69-del</div>
           </div>
           <div class="copy-hint">click to copy</div>
@@ -308,7 +253,7 @@
           <label>Message</label>
           <textarea required placeholder="Tell me about your project..."></textarea>
         </div>
-        <button type="submit" class="btn btn-grad clickable" style="width:100%;justify-content:center;">Send message <i class="fa-solid fa-paper-plane"></i></button>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send message</button>
         <div class="submit-note">Opens your email app addressed to Syeda Naveera.</div>
       </form>
     </div>
@@ -322,18 +267,18 @@
       <div class="footer-copy" style="margin-top:6px;">© 2026 Syeda Naveera. All rights reserved.</div>
     </div>
     <div class="footer-socials">
-      <a href="https://github.com/naveeradoll69-del" target="_blank" class="clickable" data-cursor="Open"><i class="fa-brands fa-github"></i></a>
-      <a href="https://instagram.com/syeda__naveera" target="_blank" class="clickable" data-cursor="Open"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://www.linkedin.com/in/syeda-naveera-821527380" target="_blank" class="clickable" data-cursor="Open"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://github.com/naveeradoll69-del" target="_blank"><i class="fa-brands fa-github"></i></a>
+      <a href="https://instagram.com/syeda__naveera" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/syeda-naveera-821527380" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
     </div>
   </div>
 </footer>
 
-<button class="scroll-top clickable" id="scrollTop" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
 
 <div class="modal-bg" id="modalBg">
   <div class="modal-box">
-    <button class="modal-close clickable" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+    <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
     <iframe id="modalIframe" src="about:blank"></iframe>
   </div>
 </div>

@@ -1,148 +1,4 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const fineHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-
-/* ---------- boot loader ---------- */
-(function(){
-  const loader = document.getElementById('bootLoader');
-  const lineEl = document.getElementById('bootLine');
-  const hero = document.querySelector('.hero');
-  function revealHero(){ if(hero) hero.classList.add('hero-ready'); }
-  if(!loader || !lineEl){ revealHero(); return; }
-  try{
-    let alreadyBooted = false;
-    try{ alreadyBooted = !!sessionStorage.getItem('bootDone'); }catch(e){}
-    if(reduceMotion || alreadyBooted){
-      loader.classList.add('hide');
-      revealHero();
-      return;
-    }
-    const text = "booting syeda-naveera.dev ...";
-    let i = 0;
-    const safety = setTimeout(()=>{ loader.classList.add('hide'); revealHero(); }, 3000);
-    function type(){
-      lineEl.textContent = text.slice(0, i);
-      i++;
-      if(i <= text.length){
-        setTimeout(type, 34);
-      } else {
-        clearTimeout(safety);
-        setTimeout(()=>{
-          loader.classList.add('hide');
-          revealHero();
-          try{ sessionStorage.setItem('bootDone', '1'); }catch(e){}
-        }, 450);
-      }
-    }
-    type();
-  }catch(e){
-    loader.classList.add('hide');
-    revealHero();
-  }
-})();
-
-/* ---------- interactive dot grid ---------- */
-if(fineHover && !reduceMotion){
-  const dotCanvas = document.getElementById('dotGrid');
-  if(dotCanvas){
-    const dctx = dotCanvas.getContext('2d');
-    let dw, dh, dots = [], dotsPaused = false;
-    const spacing = 42, radius = 160;
-    let mouseX = -9999, mouseY = -9999;
-    function resizeDots(){
-      dw = dotCanvas.width = window.innerWidth;
-      dh = dotCanvas.height = window.innerHeight;
-      dots = [];
-      for(let x = spacing/2; x < dw; x += spacing){
-        for(let y = spacing/2; y < dh; y += spacing){
-          dots.push({x, y});
-        }
-      }
-    }
-    resizeDots();
-    window.addEventListener('resize', resizeDots);
-    window.addEventListener('mousemove', e=>{ mouseX = e.clientX; mouseY = e.clientY; });
-    document.addEventListener('mouseleave', ()=>{ mouseX = -9999; mouseY = -9999; });
-    document.addEventListener('visibilitychange', ()=>{ dotsPaused = document.hidden; if(!dotsPaused) requestAnimationFrame(drawDots); });
-    function drawDots(){
-      if(dotsPaused) return;
-      dctx.clearRect(0, 0, dw, dh);
-      for(const d of dots){
-        const dx = d.x - mouseX, dy = d.y - mouseY;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        const influence = Math.max(0, 1 - dist/radius);
-        const r = 1 + influence*1.8;
-        dctx.beginPath();
-        dctx.arc(d.x, d.y, r, 0, Math.PI*2);
-        dctx.fillStyle = `rgba(34,211,238,${(0.05 + influence*0.5).toFixed(2)})`;
-        dctx.fill();
-      }
-      requestAnimationFrame(drawDots);
-    }
-    drawDots();
-  }
-}
-
-/* ---------- confetti burst ---------- */
-function confettiBurst(x, y){
-  if(reduceMotion) return;
-  const colors = ['#22d3ee','#2563eb','#8b5cf6','#34d399','#f59e0b'];
-  for(let i=0; i<22; i++){
-    const p = document.createElement('span');
-    p.className = 'confetti-piece';
-    p.style.left = x+'px';
-    p.style.top = y+'px';
-    p.style.background = colors[i % colors.length];
-    const angle = Math.random()*Math.PI*2;
-    const dist = 55 + Math.random()*85;
-    p.style.setProperty('--dx', Math.cos(angle)*dist+'px');
-    p.style.setProperty('--dy', Math.sin(angle)*dist+'px');
-    p.style.setProperty('--rot', (Math.random()*720-360)+'deg');
-    document.body.appendChild(p);
-    setTimeout(()=> p.remove(), 900);
-  }
-}
-
-/* ---------- custom cursor ---------- */
-if(fineHover && !reduceMotion){
-  document.documentElement.classList.add('custom-cursor-on');
-  const dot = document.querySelector('.cursor-dot');
-  const ring = document.querySelector('.cursor-ring');
-  const label = ring.querySelector('.cursor-label');
-  let mx=0,my=0, rx=0, ry=0;
-  window.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
-  function loop(){ rx += (mx-rx)*0.16; ry += (my-ry)*0.16; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); }
-  loop();
-
-  document.querySelectorAll('.clickable').forEach(el=>{
-    el.addEventListener('mouseenter', ()=>{
-      ring.classList.add('hover');
-      label.textContent = el.dataset.cursor || '';
-    });
-    el.addEventListener('mouseleave', ()=>{ ring.classList.remove('hover'); label.textContent=''; });
-  });
-
-  /* magnetic buttons */
-  document.querySelectorAll('.btn, .nav-cta, .float-chip').forEach(el=>{
-    el.addEventListener('mousemove', e=>{
-      const r = el.getBoundingClientRect();
-      const relX = e.clientX - (r.left + r.width/2);
-      const relY = e.clientY - (r.top + r.height/2);
-      el.style.transform = `translate(${relX*0.18}px, ${relY*0.18}px)`;
-    });
-    el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
-  });
-
-  /* 3D tilt on project + service cards */
-  document.querySelectorAll('.project-card, .service-card').forEach(el=>{
-    el.addEventListener('mousemove', e=>{
-      const r = el.getBoundingClientRect();
-      const px = (e.clientX - r.left)/r.width - 0.5;
-      const py = (e.clientY - r.top)/r.height - 0.5;
-      el.style.transform = `perspective(900px) rotateX(${(-py*6).toFixed(2)}deg) rotateY(${(px*6).toFixed(2)}deg) translateY(-4px)`;
-    });
-    el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
-  });
-}
 
 /* ---------- scroll reveal ---------- */
 const io = new IntersectionObserver((entries)=>{
@@ -169,15 +25,16 @@ scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'sm
 /* ---------- mobile nav toggle ---------- */
 const navToggle = document.getElementById('navToggle');
 const navLinksEl = document.getElementById('navLinks');
+const navToggleIcon = navToggle.querySelector('i');
 function closeMobileNav(){
   navLinksEl.classList.remove('open');
   navToggle.setAttribute('aria-expanded', 'false');
-  navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  navToggleIcon.className = 'fa-solid fa-bars';
 }
 navToggle.addEventListener('click', ()=>{
   const isOpen = navLinksEl.classList.toggle('open');
   navToggle.setAttribute('aria-expanded', String(isOpen));
-  navToggle.innerHTML = isOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+  navToggleIcon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
 });
 navLinksEl.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeMobileNav));
 document.addEventListener('click', e=>{
@@ -186,39 +43,9 @@ document.addEventListener('click', e=>{
   }
 });
 
-/* ---------- logo click: reveal full name ---------- */
-const brandLogo = document.getElementById('brandLogo');
-brandLogo.addEventListener('click', function(e){
-  e.preventDefault();
-  this.classList.toggle('expanded');
-  clearTimeout(brandLogo._t);
-  if(this.classList.contains('expanded')){
-    brandLogo._t = setTimeout(()=> this.classList.remove('expanded'), 3200);
-  }
-});
-
 /* ---------- avatar click: greeting ---------- */
-document.getElementById('avatarFrame').addEventListener('click', function(e){
-  this.style.transform = 'scale(0.97)';
-  setTimeout(()=> this.style.transform = '', 180);
+document.getElementById('avatarFrame').addEventListener('click', function(){
   showToast("Hey, I'm Syeda Naveera 👋");
-  confettiBurst(e.clientX, e.clientY);
-});
-
-/* ---------- floating chips: fact toast ---------- */
-document.querySelectorAll('.float-chip[data-fact]').forEach(chip=>{
-  chip.addEventListener('click', function(){
-    this.style.transform = 'translateY(-4px) scale(0.95)';
-    setTimeout(()=> this.style.transform = '', 200);
-    showToast(this.dataset.fact);
-  });
-});
-
-/* ---------- skill chip pop ---------- */
-document.querySelectorAll('.skill-chip').forEach(chip=>{
-  chip.addEventListener('click', ()=>{
-    chip.classList.remove('pop'); void chip.offsetWidth; chip.classList.add('pop');
-  });
 });
 
 /* ---------- service card expand ---------- */
@@ -248,8 +75,7 @@ document.querySelectorAll('[data-copy]').forEach(el=>{
 /* ---------- project preview modal ---------- */
 const modalBg = document.getElementById('modalBg');
 const modalIframe = document.getElementById('modalIframe');
-const cellinfoSrc = "cellinfo-preview.html";
-function openModal(){ modalIframe.src = cellinfoSrc; modalBg.classList.add('show'); document.body.style.overflow='hidden'; }
+function openModal(){ modalIframe.src = "cellinfo-preview.html"; modalBg.classList.add('show'); document.body.style.overflow='hidden'; }
 function closeModal(){ modalBg.classList.remove('show'); document.body.style.overflow=''; setTimeout(()=> modalIframe.src='about:blank', 300); }
 document.getElementById('openPreview').addEventListener('click', openModal);
 document.getElementById('openPreviewBtn').addEventListener('click', openModal);
@@ -265,44 +91,4 @@ document.getElementById('contactForm').addEventListener('submit', function(e){
   const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
   window.location.href = `mailto:syeda.naveera.19@gmail.com?subject=${encodeURIComponent('Portfolio inquiry from '+name)}&body=${body}`;
   showToast('Opening your email app…');
-  const btn = this.querySelector('button[type="submit"]');
-  const r = btn.getBoundingClientRect();
-  confettiBurst(r.left + r.width/2, r.top + r.height/2);
 });
-
-/* ---------- rotating tagline (typewriter) ---------- */
-const taglines = [
-  "Frontend developer focused on clean code, considered motion, and interfaces that feel good to use.",
-  "I turn plain ideas into interfaces people actually enjoy using.",
-  "Building with HTML5, CSS3, JavaScript, PHP, and Bootstrap 5 — responsive from the first line."
-];
-let tIdx=0;
-const rotatingSubEl = document.getElementById('rotatingSub');
-if(!reduceMotion && rotatingSubEl){
-  function typeTagline(text, cb){
-    let i = 0;
-    const iv = setInterval(()=>{
-      rotatingSubEl.textContent = text.slice(0, i);
-      i++;
-      if(i > text.length){
-        clearInterval(iv);
-        if(cb) setTimeout(cb, 2600);
-      }
-    }, 20);
-  }
-  function eraseTagline(cb){
-    let text = rotatingSubEl.textContent;
-    const iv = setInterval(()=>{
-      text = text.slice(0, -1);
-      rotatingSubEl.textContent = text;
-      if(text.length === 0){ clearInterval(iv); if(cb) cb(); }
-    }, 10);
-  }
-  function cycle(){
-    eraseTagline(()=>{
-      tIdx = (tIdx+1)%taglines.length;
-      typeTagline(taglines[tIdx], cycle);
-    });
-  }
-  setTimeout(cycle, 4200);
-}
