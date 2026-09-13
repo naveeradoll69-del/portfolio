@@ -180,11 +180,12 @@ section{padding:110px 0;}
 
 .fun-facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
 .fun-fact{
-  display:inline-flex;align-items:center;
+  display:inline-flex;align-items:center;gap:8px;
   background:rgba(217,119,87,.08);border:1px solid rgba(217,119,87,.18);
   color:var(--text-sub);padding:8px 14px;border-radius:30px;font-size:.85rem;
   transition:transform .2s var(--ease),border-color .2s;
 }
+.fun-fact i{color:var(--accent-soft);}
 .fun-fact:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--text);}
 
 .stats-row{

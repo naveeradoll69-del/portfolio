@@ -97,7 +97,7 @@ document.addEventListener('click', e=>{
 
 /* ---------- avatar click: greeting ---------- */
 document.getElementById('avatarFrame').addEventListener('click', function(){
-  showToast("Hey, I'm Syeda Naveera 👋");
+  showToast("Hey, I'm Syeda Naveera");
 });
 
 /* ---------- service card expand ---------- */
@@ -142,7 +142,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e){
   const name = inputs[0].value, email = inputs[1].value, msg = inputs[2].value;
   const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
   window.location.href = `mailto:syeda.naveera.19@gmail.com?subject=${encodeURIComponent('Portfolio inquiry from '+name)}&body=${body}`;
-  showToast('Opening your email app… thank you! 💌');
+  showToast('Opening your email app… thank you!');
   if(!reduceMotion){
     const btn = this.querySelector('button[type="submit"]');
     const r = btn.getBoundingClientRect();
@@ -150,13 +150,17 @@ document.getElementById('contactForm').addEventListener('submit', function(e){
   }
 });
 
-/* ---------- gentle heart burst ---------- */
+/* ---------- gentle heart burst (SVG icons) ---------- */
+const HEART_SVG = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 21s-6.7-4.35-9.3-8.1C.8 10.3 1.4 6.9 4.3 5.4c2.2-1.15 4.7-.4 6 1.4.4.5.7 1 1 1.5.3-.5.6-1 1-1.5 1.3-1.8 3.8-2.55 6-1.4 2.9 1.5 3.5 4.9 1.6 7.5C18.7 16.65 12 21 12 21z"/></svg>';
+const SPARKLE_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg>';
+const BURST_ICONS = [HEART_SVG, SPARKLE_SVG, HEART_SVG];
+const BURST_COLORS = ['var(--accent)', 'var(--accent-soft)', '#e6b45c'];
 function heartBurst(x, y){
-  const hearts = ['💛','✨','💫'];
   for(let i=0;i<5;i++){
     const h = document.createElement('span');
     h.className = 'heart-piece';
-    h.textContent = hearts[i % hearts.length];
+    h.innerHTML = BURST_ICONS[i % BURST_ICONS.length];
+    h.style.color = BURST_COLORS[i % BURST_COLORS.length];
     h.style.left = (x + (Math.random()*60-30)) + 'px';
     h.style.top = y + 'px';
     h.style.animationDelay = (i*70) + 'ms';
