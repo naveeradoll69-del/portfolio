@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
@@ -55,6 +55,15 @@
       <div class="hero-actions">
         <a href="#work" class="btn btn-primary">View my work</a>
         <a href="https://wa.me/923150025269" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+        <button class="btn btn-ghost" id="codePeekBtn" aria-expanded="false"><i class="fa-solid fa-code"></i> Peek at my code</button>
+      </div>
+
+      <div class="code-peek" id="codePeek">
+        <div class="code-peek-bar">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <span class="code-peek-filename">naveera.js</span>
+        </div>
+        <pre class="code-peek-body mono"><code id="codePeekText"></code></pre>
       </div>
     </div>
 

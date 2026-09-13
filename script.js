@@ -95,6 +95,57 @@ document.addEventListener('click', e=>{
   }
 });
 
+/* ---------- code peek reveal ---------- */
+(function(){
+  const btn = document.getElementById('codePeekBtn');
+  const panel = document.getElementById('codePeek');
+  const codeEl = document.getElementById('codePeekText');
+  if(!btn || !panel || !codeEl) return;
+
+  const plainCode =
+`const developer = {
+  name: 'Syeda Naveera',
+  role: 'Frontend Developer',
+  stack: ['HTML5', 'CSS3', 'JavaScript', 'PHP', 'Bootstrap'],
+  status: 'available for internships' // let's build something
+};`;
+
+  const highlightedCode =
+`<span class="k">const</span> developer = {
+  name: <span class="s">'Syeda Naveera'</span>,
+  role: <span class="s">'Frontend Developer'</span>,
+  stack: [<span class="s">'HTML5'</span>, <span class="s">'CSS3'</span>, <span class="s">'JavaScript'</span>, <span class="s">'PHP'</span>, <span class="s">'Bootstrap'</span>],
+  status: <span class="s">'available for internships'</span> <span class="c">// let's build something</span>
+};`;
+
+  let typed = false;
+  function typeCode(){
+    if(typed) return;
+    typed = true;
+    if(reduceMotion){ codeEl.innerHTML = highlightedCode; return; }
+    let i = 0;
+    const cursor = document.createElement('span');
+    cursor.className = 'code-peek-cursor';
+    function tick(){
+      codeEl.textContent = plainCode.slice(0, i);
+      codeEl.appendChild(cursor);
+      i++;
+      if(i <= plainCode.length){
+        setTimeout(tick, 14);
+      } else {
+        codeEl.innerHTML = highlightedCode;
+      }
+    }
+    tick();
+  }
+
+  btn.addEventListener('click', ()=>{
+    const isOpen = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+    if(isOpen) typeCode();
+  });
+})();
+
 /* ---------- avatar click: greeting ---------- */
 document.getElementById('avatarFrame').addEventListener('click', function(){
   showToast("Hey, I'm Syeda Naveera");
