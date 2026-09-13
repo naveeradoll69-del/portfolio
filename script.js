@@ -56,7 +56,17 @@ const statIo = new IntersectionObserver((entries)=>{
     requestAnimationFrame(tick);
   });
 }, {threshold:0.4});
-document.querySelectorAll('.stat-num[data-count]').forEach(el=>statIo.observe(el));
+document.querySelectorAll('.stat-num[data-count], .skill-level-pct[data-count]').forEach(el=>statIo.observe(el));
+
+/* ---------- skill level bars ---------- */
+const fillIo = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting) return;
+    entry.target.style.width = entry.target.dataset.fill + '%';
+    fillIo.unobserve(entry.target);
+  });
+}, {threshold:0.4});
+document.querySelectorAll('.skill-level-fill[data-fill]').forEach(el=>fillIo.observe(el));
 
 /* ---------- nav active link + scroll-top + scroll progress ---------- */
 const sections = document.querySelectorAll('section[id]');
@@ -144,6 +154,24 @@ document.addEventListener('click', e=>{
     btn.setAttribute('aria-expanded', String(isOpen));
     if(isOpen) typeCode();
   });
+
+  const copyBtn = document.getElementById('codePeekCopy');
+  if(copyBtn){
+    copyBtn.addEventListener('click', e=>{
+      e.stopPropagation();
+      navigator.clipboard.writeText(plainCode).then(()=>{
+        copyBtn.classList.add('copied');
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+        showToast('Code copied!');
+        const r = copyBtn.getBoundingClientRect();
+        if(typeof heartBurst === 'function') heartBurst(r.left + r.width/2, r.top);
+        setTimeout(()=>{
+          copyBtn.classList.remove('copied');
+          copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>';
+        }, 1600);
+      }).catch(()=> showToast('Could not copy — select the code manually'));
+    });
+  }
 })();
 
 /* ---------- avatar click: greeting ---------- */
