@@ -1,4 +1,22 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fineHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+/* ---------- 3D tilt on cards + avatar ---------- */
+if(fineHover && !reduceMotion){
+  function tiltify(el, opts){
+    const { lift = 0, maxDeg = 7 } = opts || {};
+    el.addEventListener('mousemove', e=>{
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left)/r.width - 0.5;
+      const py = (e.clientY - r.top)/r.height - 0.5;
+      el.style.transform = `perspective(900px) rotateX(${(-py*maxDeg).toFixed(2)}deg) rotateY(${(px*maxDeg).toFixed(2)}deg) translateY(${lift}px)`;
+    });
+    el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
+  }
+  tiltify(document.querySelector('.avatar-frame'), { maxDeg: 9 });
+  document.querySelectorAll('.project-card').forEach(el=> tiltify(el, { lift:-4, maxDeg:4 }));
+  document.querySelectorAll('.service-card').forEach(el=> tiltify(el, { lift:-4, maxDeg:5 }));
+}
 
 /* ---------- hero entrance ---------- */
 requestAnimationFrame(()=>{
