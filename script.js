@@ -1,8 +1,22 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ---------- scroll reveal ---------- */
+/* ---------- hero entrance ---------- */
+requestAnimationFrame(()=>{
+  const hero = document.querySelector('.hero');
+  if(hero) hero.classList.add('hero-ready');
+});
+
+/* ---------- scroll reveal (staggered within a shared group) ---------- */
 const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const group = e.target.closest('[data-stagger]');
+      const delay = group ? Array.from(group.children).indexOf(e.target) * 70 : 0;
+      e.target.style.transitionDelay = delay + 'ms';
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
 }, {threshold:0.15});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
