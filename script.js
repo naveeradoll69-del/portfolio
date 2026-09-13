@@ -5,17 +5,20 @@ const fineHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 (function(){
   const loader = document.getElementById('bootLoader');
   const lineEl = document.getElementById('bootLine');
-  if(!loader || !lineEl) return;
+  const hero = document.querySelector('.hero');
+  function revealHero(){ if(hero) hero.classList.add('hero-ready'); }
+  if(!loader || !lineEl){ revealHero(); return; }
   try{
     let alreadyBooted = false;
     try{ alreadyBooted = !!sessionStorage.getItem('bootDone'); }catch(e){}
     if(reduceMotion || alreadyBooted){
       loader.classList.add('hide');
+      revealHero();
       return;
     }
     const text = "booting syeda-naveera.dev ...";
     let i = 0;
-    const safety = setTimeout(()=>{ loader.classList.add('hide'); }, 3000);
+    const safety = setTimeout(()=>{ loader.classList.add('hide'); revealHero(); }, 3000);
     function type(){
       lineEl.textContent = text.slice(0, i);
       i++;
@@ -25,6 +28,7 @@ const fineHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
         clearTimeout(safety);
         setTimeout(()=>{
           loader.classList.add('hide');
+          revealHero();
           try{ sessionStorage.setItem('bootDone', '1'); }catch(e){}
         }, 450);
       }
@@ -32,8 +36,51 @@ const fineHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
     type();
   }catch(e){
     loader.classList.add('hide');
+    revealHero();
   }
 })();
+
+/* ---------- interactive dot grid ---------- */
+if(fineHover && !reduceMotion){
+  const dotCanvas = document.getElementById('dotGrid');
+  if(dotCanvas){
+    const dctx = dotCanvas.getContext('2d');
+    let dw, dh, dots = [], dotsPaused = false;
+    const spacing = 42, radius = 160;
+    let mouseX = -9999, mouseY = -9999;
+    function resizeDots(){
+      dw = dotCanvas.width = window.innerWidth;
+      dh = dotCanvas.height = window.innerHeight;
+      dots = [];
+      for(let x = spacing/2; x < dw; x += spacing){
+        for(let y = spacing/2; y < dh; y += spacing){
+          dots.push({x, y});
+        }
+      }
+    }
+    resizeDots();
+    window.addEventListener('resize', resizeDots);
+    window.addEventListener('mousemove', e=>{ mouseX = e.clientX; mouseY = e.clientY; });
+    document.addEventListener('mouseleave', ()=>{ mouseX = -9999; mouseY = -9999; });
+    document.addEventListener('visibilitychange', ()=>{ dotsPaused = document.hidden; if(!dotsPaused) requestAnimationFrame(drawDots); });
+    function drawDots(){
+      if(dotsPaused) return;
+      dctx.clearRect(0, 0, dw, dh);
+      for(const d of dots){
+        const dx = d.x - mouseX, dy = d.y - mouseY;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        const influence = Math.max(0, 1 - dist/radius);
+        const r = 1 + influence*1.8;
+        dctx.beginPath();
+        dctx.arc(d.x, d.y, r, 0, Math.PI*2);
+        dctx.fillStyle = `rgba(34,211,238,${(0.05 + influence*0.5).toFixed(2)})`;
+        dctx.fill();
+      }
+      requestAnimationFrame(drawDots);
+    }
+    drawDots();
+  }
+}
 
 /* ---------- confetti burst ---------- */
 function confettiBurst(x, y){

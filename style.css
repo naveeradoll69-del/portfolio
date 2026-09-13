@@ -100,6 +100,11 @@ html.custom-cursor-on .cursor-dot,html.custom-cursor-on .cursor-ring{display:blo
 .orb-2{width:40vw;height:40vw;bottom:-14%;right:-10%;background:radial-gradient(circle,rgba(6,182,212,0.18),transparent 70%);animation:drift2 26s ease-in-out infinite;}
 @keyframes drift1{0%,100%{transform:translate(0,0);}50%{transform:translate(4%,6%);}}
 @keyframes drift2{0%,100%{transform:translate(0,0);}50%{transform:translate(-5%,-4%);}}
+.noise-overlay{
+  position:absolute;inset:0;opacity:.035;mix-blend-mode:overlay;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dot-grid-canvas{position:fixed;inset:0;z-index:-2;pointer-events:none;}
 
 /* ---------- navbar ---------- */
 .nav{
@@ -171,6 +176,17 @@ html.custom-cursor-on .cursor-dot,html.custom-cursor-on .cursor-ring{display:blo
 .code-body .c{color:var(--text-dim);}
 .code-body .fn{color:#60a5fa;}
 
+@media (prefers-reduced-motion: no-preference){
+  .hero .badge,.hero .code-window,.hero .hero-title,.hero .hero-sub,.hero .hero-actions{
+    opacity:0;transform:translateY(18px);
+  }
+  .hero.hero-ready .badge{animation:heroRise .8s var(--ease) forwards;}
+  .hero.hero-ready .code-window{animation:heroRise .8s var(--ease) .12s forwards;}
+  .hero.hero-ready .hero-title{animation:heroRise .8s var(--ease) .24s forwards;}
+  .hero.hero-ready .hero-sub{animation:heroRise .8s var(--ease) .36s forwards;}
+  .hero.hero-ready .hero-actions{animation:heroRise .8s var(--ease) .48s forwards;}
+}
+@keyframes heroRise{ to{opacity:1;transform:translateY(0);} }
 .hero-title{font-size:clamp(2.1rem,4.4vw,3.4rem);font-weight:700;line-height:1.16;margin-bottom:20px;}
 .hero-title .grad{background:linear-gradient(120deg,#7dd3fc,var(--cyan) 55%,var(--blue));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .hero-sub{color:var(--text-sub);max-width:520px;margin-bottom:34px;font-size:1.02rem;}
